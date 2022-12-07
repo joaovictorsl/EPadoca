@@ -21,8 +21,8 @@ class EPadoca {
                 }
 
                 categoryMenu(chosenCategory)
-
-                if (input == 0) continue
+                if (input != 0)
+                    continue
 
                 if (cart.isEmpty()) {
                     if (io.shouldCancelPurchase()){
@@ -30,7 +30,7 @@ class EPadoca {
                     }
                 } else {
                     val coupon = askForCoupon()
-                    cart.generateBill(coupon)
+                    io.outFlush(cart.generateBill(coupon))
                     break
                 }
 
@@ -43,9 +43,10 @@ class EPadoca {
 
         while(true) {
 
-            val wantCoupon = io.input({ println("Deseja aplicar um coupon? 0/1")}, { i: String -> i.toIntOrNull() in 0..1 }).toInt() == 1
-
             if (invalid) println("Coupon inválido")
+            val wantCoupon = io.input({ println("Deseja aplicar um coupon? 0/1\n${if(invalid) "Coupon inválido" else ""}") },
+                { i: String -> i.toIntOrNull() in 0..1 }).toInt() == 1
+
 
             if (!wantCoupon) break
 

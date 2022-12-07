@@ -18,15 +18,20 @@ class InputOutput {
         }
         menuToPrint += "0......Finalizar compra"
 
-        println(menuToPrint)
+        pp.print { println(menuToPrint)}
     }
 
     fun shouldCancelPurchase(): Boolean {
         val choice = getter.getInput({println("Seu carrinho está vazio, deseja cancelar a compra? (S/N)")}) {
             val validChoices = listOf<String>("S", "N")
-            it.uppercase() !in validChoices
+            it.uppercase() in validChoices
         }
 
         return choice.uppercase() == "S"
+    }
+
+    fun outFlush(body: String) {
+        pp.flush()
+        println(body)
     }
 }
